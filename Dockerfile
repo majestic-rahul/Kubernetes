@@ -14,9 +14,9 @@
 
 FROM busybox:ubuntu-14.04
 
-ADD ./public/index.html /app/public/index.html
-ADD ./public/script.js /app/public/script.js
-ADD ./public/style.css /app/public/style.css
+ADD ./guestbook-go/public/index.html /app/public/index.html
+ADD ./guestbook-go/public/script.js /app/public/script.js
+ADD ./guestbook-go/public/style.css /app/public/style.css
 
 WORKDIR /app
 CMD ["./guestbook"]
