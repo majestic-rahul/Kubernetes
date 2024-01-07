@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    if: (github.event_name == 'pull_request' && && github.event.action == 'closed' && github.event.pull_request.base.ref == 'master' && github.event.pull_request.merged == true) || contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
+    if: (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.base.ref == 'master' && github.event.pull_request.merged == true) || contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
 
     steps:
       - name: Checkout Repository
