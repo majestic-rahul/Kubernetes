@@ -10,8 +10,9 @@ on:
 
 jobs:
   build:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE'))
     runs-on: ubuntu-latest
+
+    if: (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'master' && github.event.pull_request.merged == true) || contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
 
     steps:
       - name: Checkout Repository
@@ -26,5 +27,5 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           docker buildx create --use
-          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           docker buildx build --platform linux/amd64,linux/arm64 -t $DOCKER_USERNAME/guestbook-go:latest --push .
