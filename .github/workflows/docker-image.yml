@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    types:
+      - closed
 
 jobs:
   build:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE'))
     runs-on: ubuntu-latest
 
     steps:
